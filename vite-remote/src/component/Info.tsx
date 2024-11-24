@@ -7,11 +7,24 @@ const Info = () => {
     <div>
       <h1>How to use this</h1>
       <h2>In your App</h2>
+      <Install />
       <ViteConfig />
       <ReactComponent />
     </div>
   );
 };
+
+const Install = () => {
+  const data = `npm install @module-federation/vite`;
+  return (
+    <div>
+      <h4>Run below command to install</h4>
+      <SyntaxHighlighter language="bash" style={vscDarkPlus}>
+        {data}
+      </SyntaxHighlighter>
+    </div>
+  );
+}
 
 const ViteConfig = () => {
   const data = `import { defineConfig } from "vite";
@@ -46,7 +59,7 @@ export default defineConfig({
     <div>
       <h4>Copy below on your</h4>
       <code>vite.config.ts</code>
-      <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
+      <SyntaxHighlighter language="typescript" style={vscDarkPlus}>
         {data}
       </SyntaxHighlighter>
     </div>
@@ -65,6 +78,7 @@ const ReactComponent = () => {
     .map(([key, comp]) => {
       const compPath = typeof comp === "string" ? comp : comp.import;
       return `const ${getCompName(compPath)} = lazy(async () =>
+  // @ts-ignore
   import("remote/${key.replace(/\.\/+/g, "")}").catch(() => ({
     default: () => <div>Failed to load remote component</div>,
   }))
@@ -102,7 +116,7 @@ export default Remote;`;
         <code>Remote.tsx</code>
         <h4> and copy below and add that</h4>
       </div>
-      <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
+      <SyntaxHighlighter language="typescript" style={vscDarkPlus}>
         {data}
       </SyntaxHighlighter>
     </div>
