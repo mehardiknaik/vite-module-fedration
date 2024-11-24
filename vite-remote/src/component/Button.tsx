@@ -8,7 +8,7 @@ const Button = () => {
   };
   return (
     <button className={style.button} onClick={handleClick}>
-      This is Button from Remote {counter}
+      This is Button from Remote <div key={counter} className={style.number}>{counter}</div>
     </button>
   );
 };

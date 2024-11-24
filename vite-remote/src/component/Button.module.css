@@ -8,8 +8,37 @@
   display: inline-block;
   transition: 0.3s;
   border-radius: 10px;
+  cursor: pointer;
+  animation: fadeIn 0.5s ease-in-out;
 }
+.button>*{
+  display: inline-block;
+}
+
+
 button:hover{
   color: var(--bg-color);
   background-color: var(--color);
+}
+.number{
+  animation: scaleIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    scale: 2;
+    opacity: 0.3;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+  }
 }
