@@ -1,8 +1,10 @@
-import Button from "./component/Button";
+import Info from "./component/Info";
+import Button from "./component/remote/Button";
 
 function App() {
   return (
     <>
+      <Info />
       <Button />
     </>
   );
