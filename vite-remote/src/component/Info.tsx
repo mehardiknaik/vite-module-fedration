@@ -1,0 +1,111 @@
+import remoteConfig from "../../remote.config";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import style from "./Info.module.css";
+const Info = () => {
+  return (
+    <div>
+      <h1>How to use this</h1>
+      <h2>In your App</h2>
+      <ViteConfig />
+      <ReactComponent />
+    </div>
+  );
+};
+
+const ViteConfig = () => {
+  const data = `import { defineConfig } from "vite";
+import { federation } from "@module-federation/vite";
+import { dependencies } from "./package.json";
+  
+export default defineConfig({
+  plugins: [
+    federation({
+      name: "host",
+      remotes: {
+        remote: {
+          type: "module",
+          name: "${remoteConfig.name}",
+          entry: "${window?.location?.href}${remoteConfig.filename}",
+          entryGlobalName: "${remoteConfig.name}",
+          shareScope: "default",
+        },
+      },
+      exposes: {},
+      filename: "remoteEntry.js",
+      shared: {
+        react: {
+          requiredVersion: dependencies.react,
+          singleton: true,
+        },
+      },
+    }),
+  ],
+});`;
+  return (
+    <div>
+      <h4>Copy below on your</h4>
+      <code>vite.config.ts</code>
+      <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
+        {data}
+      </SyntaxHighlighter>
+    </div>
+  );
+};
+
+const getCompName = (path: string) => {
+  let match = path.match(/\/([^/]+)\.tsx$/);
+  let result = match ? match[1] : null; // "Button"
+  return result;
+};
+
+const ReactComponent = () => {
+  const comps = Object.entries(remoteConfig.exposes || {});
+  const remote = comps
+    .map(([key, comp]) => {
+      const compPath = typeof comp === "string" ? comp : comp.import;
+      return `const ${getCompName(compPath)} = lazy(async () =>
+  import("remote/${key.replace(/\.\/+/g, "")}").catch(() => ({
+    default: () => <div>Failed to load remote component</div>,
+  }))
+);`;
+    })
+    .join("\n");
+
+  const compName = comps
+    .map(([_, comp]) => {
+      const compPath = typeof comp === "string" ? comp : comp.import;
+      return `<${getCompName(compPath)} />`;
+    })
+    .join("\n      ");
+
+
+  const data = `import { lazy, Suspense } from "react";
+
+${remote}
+
+const Remote = () => {
+  return (
+    <Suspense fallback={"Loading..."}>
+      ${compName}
+    </Suspense>
+  );
+};
+
+export default Remote;`;
+
+
+  return (
+    <div>
+      <div className={style.compTitle}>
+        <h4>Create </h4>
+        <code>Remote.tsx</code>
+        <h4> and copy below and add that</h4>
+      </div>
+      <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
+        {data}
+      </SyntaxHighlighter>
+    </div>
+  );
+};
+export default Info;
