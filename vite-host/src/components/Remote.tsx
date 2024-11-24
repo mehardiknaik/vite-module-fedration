@@ -9,7 +9,9 @@ const RemoteButton = lazy(async () =>
 const RemoteSnow = lazy(
   async () =>
     // @ts-ignore
-    import("remote/remote-snow")
+    import("remote/remote-snow").catch(() => ({
+      default: () => <div>Failed to load remote component</div>,
+    }))
 );
 
 const Remote = () => {

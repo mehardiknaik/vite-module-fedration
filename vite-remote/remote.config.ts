@@ -6,6 +6,7 @@ const remoteConfig:ModuleFederationOptions = {
     name: "remote",
     exposes: {
       "./remote-button": "./src/component/remote/Button.tsx",
+      "./remote-snow": "./src/component/remote/SnowFall.tsx",
     },
     remotes: {},
     shared: {
