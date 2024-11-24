@@ -3,7 +3,6 @@ import { ErrorBoundary } from "react-error-boundary";
 
 const RemoteButton = lazy(
   async () =>
-    // @ts-ignore
     import("remote/remote-button")
 );
 const RemoteSnow = lazy(
