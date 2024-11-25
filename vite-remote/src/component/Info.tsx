@@ -52,6 +52,7 @@ export default defineConfig({
           singleton: true,
         },
       },
+      shareStrategy: "loaded-first",
     }),
   ],
 });`;
