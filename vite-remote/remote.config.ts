@@ -14,6 +14,7 @@ const remoteConfig:ModuleFederationOptions = {
         singleton: true,
       },
     },
+    shareStrategy: "loaded-first",
   }
 
   export default remoteConfig;
