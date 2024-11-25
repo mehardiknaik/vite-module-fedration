@@ -41,6 +41,7 @@ export default defineConfig(({ mode }) => {
             singleton: true,
           },
         },
+        shareStrategy: "loaded-first",
       }),
       react(),
     ],
