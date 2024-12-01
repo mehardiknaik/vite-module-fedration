@@ -90,7 +90,9 @@ const ReactComponent = () => {
   const compName = comps
     .map(([_, comp]) => {
       const compPath = typeof comp === "string" ? comp : comp.import;
-      return `<${getCompName(compPath)} />`;
+      return `<Suspense fallback={"Loading..."}>
+        <${getCompName(compPath)} />
+      </Suspense>`;
     })
     .join("\n      ");
 
@@ -101,9 +103,7 @@ ${remote}
 
 const Remote = () => {
   return (
-    <Suspense fallback={"Loading..."}>
       ${compName}
-    </Suspense>
   );
 };
 

@@ -40,6 +40,10 @@ export default defineConfig(({ mode }) => {
             requiredVersion: dependencies.react,
             singleton: true,
           },
+          "react-router": {
+            requiredVersion: dependencies["react-router"],
+            singleton: true,
+          },
         },
         shareStrategy: "loaded-first",
       }),

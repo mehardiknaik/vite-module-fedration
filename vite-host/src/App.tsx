@@ -1,10 +1,9 @@
-import Remote from "./components/Remote";
+import Routes from "./Routes";
 
 function App() {
   return (
     <>
-      <div>This is host app</div>
-      <Remote />
+      <Routes />
     </>
   );
 }
